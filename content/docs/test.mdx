@@ -1,0 +1,205 @@
+---
+title: Components
+description: Components
+---
+
+import ImageWithCaption from 'components/ImageWithCaption';
+import ImageCards from 'components/ImageCards'
+
+## Code Block
+
+```js
+console.log('Hello World');
+```
+
+## Cards - 默认组件
+
+<Cards>
+  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
+  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
+</Cards>
+
+## Image Card - single - 自定义组件
+
+<ImageWithCaption 
+  src="/images/anatomy-tw.jpg"
+  alt="解剖学太微笔记"
+  caption="解剖学太微笔记"
+  href="https://anatomy-tw.netlify.app"
+  width={300}
+  height={200}
+/>
+
+## ImageCards - bundle - 自定义组件
+<ImageCards num={2}>
+  <ImageCards.Card 
+    arrow 
+    title="Documentation theme" 
+    href="https://keep-thinking.netlify.app"
+  >
+    <>![Documentation theme](/images/keep-thinking-showcase-landingpage.jpg)</>
+  </ImageCards.Card>
+  
+  <ImageCards.Card 
+    arrow 
+    title="Blog theme" 
+    href="https://keep-thinking.netlify.app"
+  >
+    <>![Blog theme](/images/keep-thinking-showcase-landingpage.jpg)</>
+  </ImageCards.Card>
+</ImageCards>
+
+ImageCards.jsx组件：
+
+```jsx
+import React from 'react';
+import styles from './ImageCards.module.css';
+
+export default function ImageCards({ num, children }) {
+  // 根据传入的num属性限制显示的卡片数量
+  const cards = React.Children.toArray(children).slice(0, num);
+
+  return (
+    <div className={styles.container}>
+      {cards.map((card, index) => (
+        <div key={index} className={styles.cardWrapper}>
+          {card}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Card({ arrow, title, href, children }) {
+  return (
+    <a 
+      href={href} 
+      className={styles.card}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div className={styles.imageContainer}>
+        {children}
+      </div>
+      <div className={styles.content}>
+        <div className={styles.titleContainer}>
+          <h3 className={styles.title}>{title}</h3>
+          {arrow && <span className={styles.arrow}>→</span>}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+ImageCards.Card = Card;
+```
+
+ImageCards.module.css
+
+```css
+.container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 2rem 0;
+}
+
+.cardWrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.cardWrapper:hover {
+  transform: translateY(-4px);
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.content {
+  padding: 1rem;
+  background: var(--background-color);
+  color: var(--text-color, inherit);
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  margin-left: 0.1rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.arrow:hover {
+  transform: translateX(4px);
+  color: #0070f3;
+}
+
+/* 暗色模式样式 */
+@media (prefers-color-scheme: dark) {
+  .content {
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+  }
+  
+  .arrow:hover {
+    color: #1e90ff;
+  }
+}
+```
+
+```jsx
+// 在mdx文件中引入
+import ImageCards from 'components/ImageCards'
+// ...other codes
+<ImageCards num={2}>
+  <ImageCards.Card 
+    arrow 
+    title="Documentation theme" 
+    href="https://keep-thinking.netlify.app"
+  >
+    <>![Documentation theme](/images/keep-thinking-showcase-landingpage.jpg)</>
+  </ImageCards.Card>
+  
+  <ImageCards.Card 
+    arrow 
+    title="Blog theme" 
+    href="https://keep-thinking.netlify.app"
+  >
+    <>![Blog theme](/images/keep-thinking-showcase-landingpage.jpg)</>
+  </ImageCards.Card>
+</ImageCards>
+```
+
+
+
+
+
+
+
+
