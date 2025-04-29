@@ -3,7 +3,14 @@ import React from 'react';
 import styles from './ImageWithCaption.module.css';
 import Image from 'next/image';
 
-const ImageWithCaption = ({ src, alt, caption, href, width, height }) => {
+const ImageWithCaption = ({ src, alt, caption, href, width, height }: {
+  src: string;
+  alt: string;
+  caption: string;
+  href: string;
+  width: number;
+  height: number;
+}) => {  
   const handleClick = () => {
     if (href) {
       window.open(href, '_blank');

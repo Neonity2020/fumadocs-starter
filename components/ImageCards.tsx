@@ -1,7 +1,10 @@
 import React from 'react';
 import styles from './ImageCards.module.css';
 
-export default function ImageCards({ num, children }) {
+export default function ImageCards({ num, children }: {
+  num: number;
+  children: React.ReactNode;
+}) {
   // 根据传入的num属性限制显示的卡片数量
   const cards = React.Children.toArray(children).slice(0, num);
 
@@ -16,7 +19,12 @@ export default function ImageCards({ num, children }) {
   );
 }
 
-function Card({ arrow, title, href, children }) {
+function Card({ arrow, title, href, children }: {
+  arrow?: boolean;
+  title: string;
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <a 
       href={href} 
