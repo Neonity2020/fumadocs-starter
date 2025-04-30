@@ -36,6 +36,7 @@ const SortableTodoItem: React.FC<{
   setEditText: (text: string) => void;
   saveEdit: (id: number) => void;
   cancelEdit: () => void;
+  index: number;
 }> = ({
   todo,
   toggleTodo,
@@ -59,7 +60,6 @@ const SortableTodoItem: React.FC<{
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
   };
 
   return (
@@ -67,16 +67,19 @@ const SortableTodoItem: React.FC<{
       ref={setNodeRef}
       style={style}
       className={`flex items-center gap-2.5 p-3 mb-2.5 bg-gray-50 rounded flex-wrap ${
-        todo.completed ? 'completed' : ''
-      }`}
+        isDragging ? 'shadow-lg scale-105 z-50' : ''
+      } ${todo.completed ? 'completed' : ''}`}
       {...attributes}
-      onDoubleClick={() => startEdit(todo.id, todo.text)}
     >
       <div 
-        className="cursor-grab"
+        className="cursor-grab p-2 -ml-2 select-none touch-none active:cursor-grabbing"
         {...listeners}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
       >
-        <span>☰</span>
+        <span className="text-gray-400 select-none">☰</span>
       </div>
       <input
         type="checkbox"
@@ -95,13 +98,13 @@ const SortableTodoItem: React.FC<{
           <div className="flex gap-2 w-full md:w-auto">
             <button 
               onClick={() => saveEdit(todo.id)}
-              className="px-4 py-2 bg-green-500 text-white border-none rounded cursor-pointer flex-1"
+              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg shadow-md hover:from-green-600 hover:to-green-700 active:scale-95 transition-all duration-200"
             >
               保存
             </button>
             <button 
               onClick={cancelEdit}
-              className="px-4 py-2 bg-gray-500 text-white border-none rounded cursor-pointer flex-1"
+              className="px-4 py-2 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-medium rounded-lg shadow-md hover:from-gray-600 hover:to-gray-700 active:scale-95 transition-all duration-200"
             >
               取消
             </button>
@@ -113,6 +116,10 @@ const SortableTodoItem: React.FC<{
             className={`flex-1 break-words ${
               todo.completed ? 'line-through text-gray-500' : 'text-gray-900'
             }`}
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              startEdit(todo.id, todo.text);
+            }}
           >
             {todo.text}
           </span>
@@ -122,7 +129,7 @@ const SortableTodoItem: React.FC<{
                 e.stopPropagation();
                 startEdit(todo.id, todo.text);
               }}
-              className="px-4 py-2 bg-yellow-400 text-white border-none rounded cursor-pointer flex-1 z-10"
+              className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-medium rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 active:scale-95 transition-all duration-200"
             >
               编辑
             </button>
@@ -131,7 +138,7 @@ const SortableTodoItem: React.FC<{
                 e.stopPropagation();
                 deleteTodo(todo.id);
               }}
-              className="px-4 py-2 bg-red-500 text-white border-none rounded cursor-pointer flex-1 z-10"
+              className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-md hover:from-red-600 hover:to-red-700 active:scale-95 transition-all duration-200"
             >
               删除
             </button>
@@ -151,7 +158,12 @@ const TodoList: React.FC = () => {
   const [todoToDelete, setTodoToDelete] = useState<number | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 1,
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -253,7 +265,7 @@ const TodoList: React.FC = () => {
         />
         <button 
           onClick={addTodo}
-          className="px-4 py-3 bg-blue-500 text-white border-none rounded cursor-pointer text-base"
+          className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200"
         >
           添加
         </button>
@@ -265,7 +277,7 @@ const TodoList: React.FC = () => {
       >
         <SortableContext items={todos} strategy={verticalListSortingStrategy}>
           <ul className="list-none p-0 m-0">
-            {todos.map((todo) => (
+            {todos.map((todo, index) => (
               <SortableTodoItem
                 key={todo.id}
                 todo={todo}
@@ -277,6 +289,7 @@ const TodoList: React.FC = () => {
                 setEditText={setEditText}
                 saveEdit={saveEdit}
                 cancelEdit={cancelEdit}
+                index={index}
               />
             ))}
           </ul>
