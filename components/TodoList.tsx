@@ -18,6 +18,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { ConfirmDialog } from './ConfirmDialog';
 
 interface Todo {
   id: number;
@@ -96,13 +97,13 @@ const SortableTodoItem: React.FC<{
               onClick={() => saveEdit(todo.id)}
               className="px-4 py-2 bg-green-500 text-white border-none rounded cursor-pointer flex-1"
             >
-              Save
+              保存
             </button>
             <button 
               onClick={cancelEdit}
               className="px-4 py-2 bg-gray-500 text-white border-none rounded cursor-pointer flex-1"
             >
-              Cancel
+              取消
             </button>
           </div>
         </div>
@@ -121,18 +122,18 @@ const SortableTodoItem: React.FC<{
                 e.stopPropagation();
                 startEdit(todo.id, todo.text);
               }}
-              className="px-4 py-2 bg-yellow-400 text-white border-none rounded cursor-pointer flex-1"
+              className="px-4 py-2 bg-yellow-400 text-white border-none rounded cursor-pointer flex-1 z-10"
             >
-              Edit
+              编辑
             </button>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
                 deleteTodo(todo.id);
               }}
-              className="px-4 py-2 bg-red-500 text-white border-none rounded cursor-pointer flex-1"
+              className="px-4 py-2 bg-red-500 text-white border-none rounded cursor-pointer flex-1 z-10"
             >
-              Delete
+              删除
             </button>
           </div>
         </>
@@ -146,6 +147,8 @@ const TodoList: React.FC = () => {
   const [newTodo, setNewTodo] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [todoToDelete, setTodoToDelete] = useState<number | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -187,11 +190,20 @@ const TodoList: React.FC = () => {
     ));
   };
 
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+  const handleDelete = (id: number) => {
+    setTodoToDelete(id);
+    setDeleteDialogOpen(true);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const confirmDelete = () => {
+    if (todoToDelete) {
+      setTodos(todos.filter(todo => todo.id !== todoToDelete));
+      setTodoToDelete(null);
+    }
+    setDeleteDialogOpen(false);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       addTodo();
     }
@@ -229,21 +241,21 @@ const TodoList: React.FC = () => {
 
   return (
     <div className="max-w-[600px] mx-auto p-5 w-full box-border">
-      <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)]">Todo List</h1>
+      <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)]">任务列表</h1>
       <div className="flex flex-col gap-2.5 mb-5 md:flex-row">
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Add a new todo"
+          onKeyDown={handleKeyPress}
+          placeholder="添加一个新任务"
           className="flex-1 p-2 rounded border border-gray-300 text-base"
         />
         <button 
           onClick={addTodo}
           className="px-4 py-3 bg-blue-500 text-white border-none rounded cursor-pointer text-base"
         >
-          Add
+          添加
         </button>
       </div>
       <DndContext
@@ -259,7 +271,7 @@ const TodoList: React.FC = () => {
                 todo={todo}
                 toggleTodo={toggleTodo}
                 startEdit={startEdit}
-                deleteTodo={deleteTodo}
+                deleteTodo={handleDelete}
                 editingId={editingId}
                 editText={editText}
                 setEditText={setEditText}
@@ -270,6 +282,13 @@ const TodoList: React.FC = () => {
           </ul>
         </SortableContext>
       </DndContext>
+      <ConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        onConfirm={confirmDelete}
+        title="删除任务"
+        description="确定要删除这个任务吗？此操作无法撤销。"
+      />
     </div>
   );
 };
