@@ -11,6 +11,8 @@ interface Todo {
 const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState('');
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editText, setEditText] = useState('');
 
   // 只在客户端初始化
   useEffect(() => {
@@ -74,6 +76,24 @@ const TodoList: React.FC = () => {
     }
   };
 
+  const startEdit = (id: number, text: string) => {
+    setEditingId(id);
+    setEditText(text);
+  };
+
+  const saveEdit = (id: number) => {
+    setTodos(todos.map(todo =>
+      todo.id === id ? { ...todo, text: editText } : todo
+    ));
+    setEditingId(null);
+    setEditText('');
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditText('');
+  };
+
   return (
     <div className="todo-list" style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
       <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Todo List</h1>
@@ -126,28 +146,81 @@ const TodoList: React.FC = () => {
               onChange={() => toggleTodo(todo.id)}
               style={{ cursor: 'pointer' }}
             />
-            <span 
-              style={{ 
-                flex: 1, 
-                textDecoration: todo.completed ? 'line-through' : 'none',
-                color: todo.completed ? '#6c757d' : '#212529'
-              }}
-            >
-              {todo.text}
-            </span>
-            <button 
-              onClick={() => deleteTodo(todo.id)}
-              style={{ 
-                padding: '4px 8px', 
-                backgroundColor: '#dc3545', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px', 
-                cursor: 'pointer' 
-              }}
-            >
-              Delete
-            </button>
+            {editingId === todo.id ? (
+              <div style={{ flex: 1, display: 'flex', gap: '10px' }}>
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  style={{ flex: 1, padding: '4px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
+                <button 
+                  onClick={() => saveEdit(todo.id)}
+                  style={{ 
+                    padding: '4px 8px', 
+                    backgroundColor: '#28a745', 
+                    color: 'white', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer' 
+                  }}
+                >
+                  Save
+                </button>
+                <button 
+                  onClick={cancelEdit}
+                  style={{ 
+                    padding: '4px 8px', 
+                    backgroundColor: '#6c757d', 
+                    color: 'white', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer' 
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <>
+                <span 
+                  style={{ 
+                    flex: 1, 
+                    textDecoration: todo.completed ? 'line-through' : 'none',
+                    color: todo.completed ? '#6c757d' : '#212529'
+                  }}
+                >
+                  {todo.text}
+                </span>
+                <button 
+                  onClick={() => startEdit(todo.id, todo.text)}
+                  style={{ 
+                    padding: '4px 8px', 
+                    backgroundColor: '#ffc107', 
+                    color: 'white', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer',
+                    marginRight: '8px'
+                  }}
+                >
+                  Edit
+                </button>
+                <button 
+                  onClick={() => deleteTodo(todo.id)}
+                  style={{ 
+                    padding: '4px 8px', 
+                    backgroundColor: '#dc3545', 
+                    color: 'white', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer' 
+                  }}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </li>
         ))}
       </ul>
