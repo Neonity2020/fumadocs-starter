@@ -27,3 +27,5 @@ yarn-error.log*
 .vercel
 next-env.d.ts
 .specstory
+# SpecStory explanation file
+.specstory/.what-is-this.md

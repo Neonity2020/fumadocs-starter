@@ -95,76 +95,31 @@ const TodoList: React.FC = () => {
   };
 
   return (
-    <div className="todo-list" style={{ 
-      maxWidth: '600px', 
-      margin: '0 auto', 
-      padding: '20px',
-      width: '100%',
-      boxSizing: 'border-box'
-    }}>
-      <h1 style={{ 
-        textAlign: 'center', 
-        marginBottom: '20px',
-        fontSize: 'clamp(1.5rem, 6vw, 2rem)' // 响应式字体大小
-      }}>Todo List</h1>
-      <div className="add-todo" style={{ 
-        display: 'flex', 
-        gap: '10px', 
-        marginBottom: '20px',
-        flexDirection: 'column', // 移动端改为垂直布局
-        '@media (min-width: 600px)': {
-          flexDirection: 'row' // 桌面端保持水平布局
-        }
-      }}>
+    <div className="max-w-[600px] mx-auto p-5 w-full box-border">
+      <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)]">Todo List</h1>
+      <div className="flex flex-col gap-2.5 mb-5 md:flex-row">
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Add a new todo"
-          style={{ 
-            flex: 1, 
-            padding: '8px', 
-            borderRadius: '4px', 
-            border: '1px solid #ccc',
-            fontSize: '16px' // 确保移动端输入字体大小合适
-          }}
+          className="flex-1 p-2 rounded border border-gray-300 text-base"
         />
         <button 
           onClick={addTodo}
-          style={{ 
-            padding: '12px 16px', // 增大点击区域
-            backgroundColor: '#007bff', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px', 
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
+          className="px-4 py-3 bg-blue-500 text-white border-none rounded cursor-pointer text-base"
         >
           Add
         </button>
       </div>
-      <ul style={{ 
-        listStyle: 'none', 
-        padding: 0,
-        margin: 0
-      }}>
+      <ul className="list-none p-0 m-0">
         {todos.map((todo, index) => (
           <li 
             key={todo.id} 
-            className={todo.completed ? 'completed' : ''}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '10px', 
-              padding: '12px', 
-              marginBottom: '10px', 
-              backgroundColor: '#f8f9fa', 
-              borderRadius: '4px',
-              cursor: 'grab',
-              flexWrap: 'wrap' // 允许内容换行
-            }}
+            className={`flex items-center gap-2.5 p-3 mb-2.5 bg-gray-50 rounded cursor-grab flex-wrap ${
+              todo.completed ? 'completed' : ''
+            }`}
             draggable
             onDragStart={(e) => handleDragStart(e, index)}
             onDragOver={handleDragOver}
@@ -174,64 +129,26 @@ const TodoList: React.FC = () => {
               type="checkbox"
               checked={todo.completed}
               onChange={() => toggleTodo(todo.id)}
-              style={{ 
-                cursor: 'pointer',
-                width: '20px',
-                height: '20px'
-              }}
+              className="cursor-pointer w-5 h-5"
             />
             {editingId === todo.id ? (
-              <div style={{ 
-                flex: 1, 
-                display: 'flex', 
-                gap: '10px',
-                flexWrap: 'wrap' // 允许内容换行
-              }}>
+              <div className="flex-1 flex gap-2.5 flex-wrap">
                 <input
                   type="text"
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
-                  style={{ 
-                    flex: 1, 
-                    padding: '8px', 
-                    borderRadius: '4px', 
-                    border: '1px solid #ccc',
-                    minWidth: '150px' // 确保输入框最小宽度
-                  }}
+                  className="flex-1 p-2 rounded border border-gray-300 min-w-[150px]"
                 />
-                <div style={{
-                  display: 'flex',
-                  gap: '8px',
-                  width: '100%',
-                  '@media (min-width: 400px)': {
-                    width: 'auto'
-                  }
-                }}>
+                <div className="flex gap-2 w-full md:w-auto">
                   <button 
                     onClick={() => saveEdit(todo.id)}
-                    style={{ 
-                      padding: '8px 16px', 
-                      backgroundColor: '#28a745', 
-                      color: 'white', 
-                      border: 'none', 
-                      borderRadius: '4px', 
-                      cursor: 'pointer',
-                      flex: 1
-                    }}
+                    className="px-4 py-2 bg-green-500 text-white border-none rounded cursor-pointer flex-1"
                   >
                     Save
                   </button>
                   <button 
                     onClick={cancelEdit}
-                    style={{ 
-                      padding: '8px 16px', 
-                      backgroundColor: '#6c757d', 
-                      color: 'white', 
-                      border: 'none', 
-                      borderRadius: '4px', 
-                      cursor: 'pointer',
-                      flex: 1
-                    }}
+                    className="px-4 py-2 bg-gray-500 text-white border-none rounded cursor-pointer flex-1"
                   >
                     Cancel
                   </button>
@@ -240,45 +157,22 @@ const TodoList: React.FC = () => {
             ) : (
               <>
                 <span 
-                  style={{ 
-                    flex: 1, 
-                    textDecoration: todo.completed ? 'line-through' : 'none',
-                    color: todo.completed ? '#6c757d' : '#212529',
-                    wordBreak: 'break-word' // 长文本自动换行
-                  }}
+                  className={`flex-1 break-words ${
+                    todo.completed ? 'line-through text-gray-500' : 'text-gray-900'
+                  }`}
                 >
                   {todo.text}
                 </span>
-                <div style={{
-                  display: 'flex',
-                  gap: '8px',
-                  flexWrap: 'wrap'
-                }}>
+                <div className="flex gap-2 flex-wrap">
                   <button 
                     onClick={() => startEdit(todo.id, todo.text)}
-                    style={{ 
-                      padding: '8px 16px', 
-                      backgroundColor: '#ffc107', 
-                      color: 'white', 
-                      border: 'none', 
-                      borderRadius: '4px', 
-                      cursor: 'pointer',
-                      flex: 1
-                    }}
+                    className="px-4 py-2 bg-yellow-400 text-white border-none rounded cursor-pointer flex-1"
                   >
                     Edit
                   </button>
                   <button 
                     onClick={() => deleteTodo(todo.id)}
-                    style={{ 
-                      padding: '8px 16px', 
-                      backgroundColor: '#dc3545', 
-                      color: 'white', 
-                      border: 'none', 
-                      borderRadius: '4px', 
-                      cursor: 'pointer',
-                      flex: 1
-                    }}
+                    className="px-4 py-2 bg-red-500 text-white border-none rounded cursor-pointer flex-1"
                   >
                     Delete
                   </button>
