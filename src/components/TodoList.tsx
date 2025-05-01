@@ -67,7 +67,7 @@ const SortableTodoItem: React.FC<{
     <li
       ref={setNodeRef}
       style={style}
-      className={`flex items-center gap-2.5 p-3 mb-2.5 bg-gray-50 rounded flex-wrap ${
+      className={`flex items-center gap-2.5 p-3 mb-2.5 bg-card rounded flex-wrap ${
         isDragging ? 'shadow-lg scale-105 z-50' : ''
       } ${todo.completed ? 'completed' : ''}`}
       {...attributes}
@@ -80,7 +80,7 @@ const SortableTodoItem: React.FC<{
           e.stopPropagation();
         }}
       >
-        <span className="text-gray-400 select-none">☰</span>
+        <span className="text-muted-foreground select-none">☰</span>
       </div>
       <input
         type="checkbox"
@@ -94,20 +94,20 @@ const SortableTodoItem: React.FC<{
             type="text"
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="flex-1 p-2 rounded border border-gray-300 min-w-[150px]"
+            className="flex-1 p-2 rounded border border-input bg-background text-foreground min-w-[150px]"
           />
           <div className="flex gap-2 w-full md:w-auto">
             <Button 
               onClick={() => saveEdit(todo.id)}
               variant="default"
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               保存
             </Button>
             <Button 
               onClick={cancelEdit}
               variant="secondary"
-              className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700"
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
             >
               取消
             </Button>
@@ -117,7 +117,7 @@ const SortableTodoItem: React.FC<{
         <>
           <span 
             className={`flex-1 break-words ${
-              todo.completed ? 'line-through text-gray-500' : 'text-gray-900'
+              todo.completed ? 'line-through text-muted-foreground' : 'text-foreground'
             }`}
             onDoubleClick={(e) => {
               e.stopPropagation();
@@ -132,8 +132,8 @@ const SortableTodoItem: React.FC<{
                 e.stopPropagation();
                 startEdit(todo.id, todo.text);
               }}
-              variant="default"
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600"
+              variant="outline"
+              className="bg-accent text-accent-foreground hover:bg-accent/90"
             >
               编辑
             </Button>
@@ -143,7 +143,7 @@ const SortableTodoItem: React.FC<{
                 deleteTodo(todo.id);
               }}
               variant="destructive"
-              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
+              className="bg-destructive text-gray-50 hover:bg-destructive/90"
             >
               删除
             </Button>
@@ -258,7 +258,7 @@ const TodoList: React.FC = () => {
 
   return (
     <div className="max-w-[600px] mx-auto p-5 w-full box-border">
-      <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)]">任务列表</h1>
+      <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)] text-foreground">任务列表</h1>
       <div className="flex flex-col gap-2.5 mb-5 md:flex-row">
         <input
           type="text"
@@ -266,12 +266,12 @@ const TodoList: React.FC = () => {
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyDown={handleKeyPress}
           placeholder="添加一个新任务"
-          className="flex-1 p-2 rounded border border-gray-300 text-base"
+          className="flex-1 p-2 rounded border border-input bg-background text-foreground text-base"
         />
         <Button 
           onClick={addTodo}
           variant="default"
-          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
+          className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
           添加
         </Button>
