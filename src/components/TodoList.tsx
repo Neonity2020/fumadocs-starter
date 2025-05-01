@@ -19,6 +19,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { ConfirmDialog } from './ConfirmDialog';
+import { Button } from "@/components/ui/button";
 
 interface Todo {
   id: number;
@@ -96,18 +97,20 @@ const SortableTodoItem: React.FC<{
             className="flex-1 p-2 rounded border border-gray-300 min-w-[150px]"
           />
           <div className="flex gap-2 w-full md:w-auto">
-            <button 
+            <Button 
               onClick={() => saveEdit(todo.id)}
-              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg shadow-md hover:from-green-600 hover:to-green-700 active:scale-95 transition-all duration-200"
+              variant="default"
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
             >
               保存
-            </button>
-            <button 
+            </Button>
+            <Button 
               onClick={cancelEdit}
-              className="px-4 py-2 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-medium rounded-lg shadow-md hover:from-gray-600 hover:to-gray-700 active:scale-95 transition-all duration-200"
+              variant="secondary"
+              className="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700"
             >
               取消
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -124,24 +127,26 @@ const SortableTodoItem: React.FC<{
             {todo.text}
           </span>
           <div className="flex gap-2 flex-wrap relative z-10">
-            <button 
+            <Button 
               onClick={(e) => {
                 e.stopPropagation();
                 startEdit(todo.id, todo.text);
               }}
-              className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-medium rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 active:scale-95 transition-all duration-200"
+              variant="default"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600"
             >
               编辑
-            </button>
-            <button 
+            </Button>
+            <Button 
               onClick={(e) => {
                 e.stopPropagation();
                 deleteTodo(todo.id);
               }}
-              className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-md hover:from-red-600 hover:to-red-700 active:scale-95 transition-all duration-200"
+              variant="destructive"
+              className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
             >
               删除
-            </button>
+            </Button>
           </div>
         </>
       )}
@@ -263,12 +268,13 @@ const TodoList: React.FC = () => {
           placeholder="添加一个新任务"
           className="flex-1 p-2 rounded border border-gray-300 text-base"
         />
-        <button 
+        <Button 
           onClick={addTodo}
-          className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200"
+          variant="default"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
         >
           添加
-        </button>
+        </Button>
       </div>
       <DndContext
         sensors={sensors}
