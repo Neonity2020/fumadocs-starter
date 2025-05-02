@@ -5,8 +5,25 @@ description: Components
 
 import ImageWithCaption from '@/components/ImageWithCaption';
 import ImageCards from '@/components/ImageCards'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+ 
+## Accordion - 默认组件
 
-## Code Block
+<Accordions type="multiple">
+  <Accordion title="My Title 01">My Content 01</Accordion>
+  <Accordion title="My Title 02">My Content 02</Accordion>
+  <Accordion title="My Title 03">My Content 03</Accordion>
+</Accordions>
+
+```tsx
+<Accordions type="multiple">
+  <Accordion title="My Title 01">My Content 01</Accordion>
+  <Accordion title="My Title 02">My Content 02</Accordion>
+  <Accordion title="My Title 03">My Content 03</Accordion>
+</Accordions>
+```
+
+## Code Block - 默认组件
 
 ```js
 console.log('Hello World');
