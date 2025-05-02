@@ -58,6 +58,8 @@ const SortableTodoItem: React.FC<{
     isDragging,
   } = useSortable({ id: todo.id });
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -116,17 +118,18 @@ const SortableTodoItem: React.FC<{
       ) : (
         <>
           <span 
-            className={`flex-1 break-words ${
+            className={`flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap ${
               todo.completed ? 'line-through text-muted-foreground' : 'text-foreground'
             }`}
             onDoubleClick={(e) => {
               e.stopPropagation();
               startEdit(todo.id, todo.text);
             }}
+            title={todo.text}
           >
             {todo.text}
           </span>
-          <div className="flex gap-2 flex-wrap relative z-10">
+          <div className="md:flex gap-2 flex-wrap relative z-10 hidden">
             <Button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -147,6 +150,45 @@ const SortableTodoItem: React.FC<{
             >
               删除
             </Button>
+          </div>
+          <div className="md:hidden relative">
+            <button 
+              className="p-2 text-muted-foreground hover:bg-accent/10 rounded"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-ellipsis">
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="12" r="1"/>
+              </svg>
+            </button>
+            {isMenuOpen && (
+              <div className="absolute right-0 top-full mt-1 w-24 bg-background border border-input rounded shadow-lg z-20">
+                <button
+                  className="w-full px-4 py-2 text-left hover:bg-accent/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    startEdit(todo.id, todo.text);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  编辑
+                </button>
+                <button
+                  className="w-full px-4 py-2 text-left text-destructive hover:bg-destructive/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteTodo(todo.id);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  删除
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}
