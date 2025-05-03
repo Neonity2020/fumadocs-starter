@@ -69,13 +69,13 @@ const SortableTodoItem: React.FC<{
     <li
       ref={setNodeRef}
       style={style}
-      className={`flex items-center gap-2.5 p-3 mb-2.5 bg-card rounded flex-wrap ${
+      className={`flex items-center gap-2 p-2 mb-2 bg-card rounded flex-wrap ${
         isDragging ? 'shadow-lg scale-105 z-50' : ''
       } ${todo.completed ? 'completed' : ''}`}
       {...attributes}
     >
       <div 
-        className="cursor-grab p-2 -ml-2 select-none touch-none active:cursor-grabbing"
+        className="cursor-grab p-1 -ml-1 select-none touch-none active:cursor-grabbing"
         {...listeners}
         onClick={(e) => {
           e.preventDefault();
@@ -301,7 +301,7 @@ const TodoList: React.FC = () => {
   return (
     <div className="max-w-[600px] mx-auto p-5 w-full box-border">
       <h1 className="text-center mb-5 text-[clamp(1.5rem,6vw,2rem)] text-foreground">任务列表</h1>
-      <div className="flex flex-col gap-2.5 mb-5 md:flex-row">
+      <div className="flex gap-2.5 mb-5">
         <input
           type="text"
           value={newTodo}
@@ -313,9 +313,12 @@ const TodoList: React.FC = () => {
         <Button 
           onClick={addTodo}
           variant="default"
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 w-12 flex-shrink-0"
         >
-          添加
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
+            <path d="M5 12h14"/>
+            <path d="M12 5v14"/>
+          </svg>
         </Button>
       </div>
       <DndContext
