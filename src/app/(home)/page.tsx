@@ -4,6 +4,7 @@ export default function HomePage() {
   return (
     <main className="flex flex-1 flex-col justify-center text-center">
       <h1 className="mb-4 text-2xl font-bold">欢迎使用 FumaDocs Starter</h1>
+      <h2 className="text-fd-muted-foreground mb-4">Fumadocs 官方网站：<Link href="https://fumadocs.dev/" className="text-fd-foreground font-semibold underline">https://fumadocs.dev/</Link></h2>
       <p className="text-fd-muted-foreground">
         您可以打开{' '}
         <Link

@@ -1,4 +1,4 @@
 {
     "title": "FumaDocs Starter",
-    "pages": ["projects", "areas", "fuma-docs", "index", "components", "todolist", "add-icons-to-sidebar-items","make-a-blog","cursor-manual","mri-pm-zen"]
+    "pages": ["index","projects", "areas", "fuma-docs", "components", "todolist", "add-icons-to-sidebar-items","make-a-blog","cursor-manual","mri-pm-zen"]
   }
