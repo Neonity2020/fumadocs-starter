@@ -1,4 +1,4 @@
-import { BookIcon } from 'lucide-react';
+import { BookIcon, AlbumIcon } from 'lucide-react';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
 /**
@@ -33,7 +33,7 @@ export const baseOptions: BaseLayoutProps = {
       
     },
     {
-      icon: <BookIcon />,
+      icon: <AlbumIcon />,
       text: 'Blog',
       url: '/blog',
       // secondary items will be displayed differently on navbar
