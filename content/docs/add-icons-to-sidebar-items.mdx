@@ -1,8 +1,8 @@
 ---
-title: 如何创建一个博客
+title: 给sidebar添加图标
 author: Fuma Nama
-date: 2024-12-15
-description: 如何创建一个博客
+date: 2025-05-05
+description: 给sidebar添加图标
 icon: Album
 ---
 import { NotebookPen, EclipseIcon, HomeIcon, BookIcon } from "lucide-react"; 
@@ -29,3 +29,19 @@ import { NotebookPen, EclipseIcon, HomeIcon, BookIcon } from "lucide-react";
     icon={ <NotebookPen />}
   />
 </Cards>
+
+## 给sidebar添加图标
+
+```
+// src/lib/source.ts
+
+export const source = loader({
+  // it assigns a URL to your pages
+  baseUrl: '/docs',
+  icon(icon) {  
+    if (icon && icon in icons)
+      return createElement(icons[icon as keyof typeof icons]);
+  },
+  source: docs.toFumadocsSource(),
+});
+```

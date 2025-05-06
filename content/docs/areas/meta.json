@@ -1,5 +1,5 @@
 {
-    "title": "在建项目",
+    "title": "领域管理",
     "pages": ["anatomy-tw", "mri-pm-zen", "todolist"],
-    "icon": "Hammer"
+    "icon": "PanelsTopLeft"
 }
