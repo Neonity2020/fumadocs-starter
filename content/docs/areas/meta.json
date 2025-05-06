@@ -1,5 +1,5 @@
 {
     "title": "领域管理",
-    "pages": ["anatomy-tw", "mri-pm-zen", "todolist"],
+    "pages": ["anatomy", "mri", "web-dev"],
     "icon": "PanelsTopLeft"
 }

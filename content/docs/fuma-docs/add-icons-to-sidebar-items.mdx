@@ -1,0 +1,50 @@
+---
+title: 给sidebar添加图标
+author: Neonity
+date: 2025-05-05
+description: 给sidebar添加图标
+icon: Paintbrush
+---
+import { NotebookPen, EclipseIcon, HomeIcon, BookIcon, PaintbrushIcon } from "lucide-react"; 
+
+<Cards>
+  <Card
+    title="如何创建一个博客 https://fumadocs.dev/blog/make-a-blog"
+    href="https://fumadocs.dev/blog/make-a-blog"
+    icon={<EclipseIcon />}
+  />
+  <Card
+    title="Docs"
+    href="/docs"
+    icon={ <BookIcon />}
+  />
+  <Card
+    title="Blog"
+    href="/blog"
+    icon={ <NotebookPen />}
+  />
+  <Card
+    title="Home"
+    href="/"
+    icon={ <HomeIcon />}
+  />
+</Cards>
+
+## 给sidebar添加图标
+
+```
+// src/lib/source.ts
+
+export const source = loader({
+  // it assigns a URL to your pages
+  baseUrl: '/docs',
+  icon(icon) {  
+    if (icon && icon in icons)
+      return createElement(icons[icon as keyof typeof icons]);
+  },
+  source: docs.toFumadocsSource(),
+});
+```
+## lucide 图标库
+
+[lucide.dev/icons/](https://lucide.dev/icons/)
