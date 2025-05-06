@@ -1,0 +1,33 @@
+---
+title: PARA Dashboard
+description: Projects·Areas·Resources·Archives | 项目 · 领域 · 资源 · 存档 仪表盘
+---
+import { BrainIcon, EclipseIcon, HomeIcon, BookIcon, HammerIcon, LayoutDashboard, Library } from "lucide-react";
+
+<Cards>
+    <Card
+        icon={<HammerIcon />}
+        title="Projects 在建项目"
+        href="/docs/projects"
+    />
+    <Card
+        icon={<LayoutDashboard />}
+        title="Areas 长期领域"
+        href="/docs/areas/"
+    />
+    <Card
+        icon={<BookIcon />}
+        title="Resources 资源搜集"
+        href="/docs/resources"
+    />
+    <Card
+        icon={<Library />}
+        title="Archives 低频存档"
+        href="/docs/archives"
+    />
+    <Card
+        icon={<HomeIcon />}
+        title="返回主页"
+        href="/"
+    />
+</Cards>

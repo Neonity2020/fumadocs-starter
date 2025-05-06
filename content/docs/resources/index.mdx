@@ -1,0 +1,58 @@
+---
+title: 资源搜集
+description: 将资源性资料归集到这里，便于项目调用
+---
+
+import { BrainIcon, EclipseIcon, HomeIcon, ListIcon } from "lucide-react"; 
+
+欢迎使用项目管理文档! 您可以开始在 `/content/docs/resources` 中编写文档。
+
+## web 开发
+
+<Cards>
+  <Card
+    icon={<BrainIcon />}
+    title="NextJS"
+    href="https://nextjs.org"
+  />
+  <Card
+    icon={<ListIcon />}
+    title="NextJS中文"
+    href="https://nextjscn.org"
+  />
+  <Card
+    icon={<EclipseIcon />}
+    title="Fumadocs 官方站点 https://fumadocs.dev/"
+    href="https://fumadocs.dev"
+  />
+  <Card
+    icon={<HomeIcon />}
+    title="返回主页"
+    href="/"
+  />
+
+</Cards>
+
+## 在建项目
+
+文件结构
+
+```
+content/docs/projects/
+├── index.mdx
+├── anatomy-tw.mdx
+├── mri-pm-zen.mdx
+├── todolist.mdx
+└── meta.json
+```
+
+meta.json
+
+```json
+{
+  "title": "在建项目",
+  "pages": ["anatomy-tw", "mri-pm-zen", "todolist"]
+}
+```
+
+<Callout>不要在meta.json中添加`index.mdx`，这样folder就可以正确指向`index.mdx`。</Callout>
