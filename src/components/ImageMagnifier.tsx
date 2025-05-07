@@ -72,7 +72,7 @@ const ImageMagnifier: React.FC<ImageMagnifierProps> = ({
             variant="outline"
             size="default"
           >
-            {isChinese ? '切换英文' : 'Switch to Chinese'}
+            {isChinese ? '切换英文标注' : 'Switch to Chinese annotation'}
           </Button>
         )}
       </div>
