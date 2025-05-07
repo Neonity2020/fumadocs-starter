@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import styles from './ImageMagnifier.module.css';
 
 interface ImageMagnifierProps {
@@ -43,13 +44,21 @@ const ImageMagnifier: React.FC<ImageMagnifierProps> = ({
       onMouseLeave={() => setShowMagnifier(false)}
       onMouseMove={handleMouseMove}
     >
-      <img src={src} alt="magnified" className={styles.image} />
-      {showMagnifier && (
+      <Image
+        src={src}
+        alt="magnified"
+        className={styles.image}
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: '100%', height: 'auto' }}
+      />
+      {showMagnifier && containerRef.current && (
         <div
           className={styles.magnifier}
           style={{
             backgroundImage: `url(${src})`,
-            backgroundPosition: `${(position.x / containerRef.current?.clientWidth! * 100)}% ${(position.y / containerRef.current?.clientHeight! * 100)}%`,
+            backgroundPosition: `${(position.x / containerRef.current.clientWidth * 100)}% ${(position.y / containerRef.current.clientHeight * 100)}%`,
             backgroundSize: `${zoomLevel * 100}%`,
             left: position.x,
             top: position.y,
