@@ -8,6 +8,7 @@ interface ImageMagnifierProps {
   width?: string;
   height?: string;
   zoomLevel?: number;
+  minWidth?: string;
 }
 
 const ImageMagnifier: React.FC<ImageMagnifierProps> = ({
@@ -15,6 +16,7 @@ const ImageMagnifier: React.FC<ImageMagnifierProps> = ({
   width = '100%',
   height = 'auto',
   zoomLevel = 2,
+  minWidth = '300px',
 }) => {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -39,7 +41,11 @@ const ImageMagnifier: React.FC<ImageMagnifierProps> = ({
     <div
       ref={containerRef}
       className={styles.container}
-      style={{ width, height }}
+      style={{ 
+        width, 
+        height,
+        minWidth
+      }}
       onMouseEnter={() => setShowMagnifier(true)}
       onMouseLeave={() => setShowMagnifier(false)}
       onMouseMove={handleMouseMove}
