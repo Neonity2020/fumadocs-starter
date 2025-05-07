@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           links: [
             ['Home', '/'],
             ['Docs', '/docs'],
-            ['Fumadocs使用指南', '/docs/fuma-docs'],
+            ['Fumadocs 使用指南', '/docs/fuma-docs'],
           ]
          }}>
 
