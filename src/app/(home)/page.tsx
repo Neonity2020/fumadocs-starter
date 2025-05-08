@@ -25,20 +25,20 @@ export default function HomePage() {
       <p className="text-fd-muted-foreground mt-4">
         或者您也可以使用{' '}
         <Link
-          href="/docs/projects/todolist/"
+          href="/docs/todolist/"
           className="text-fd-foreground font-semibold underline"
         >
-          /docs/projects/todolist/
+          /docs/todolist/
         </Link>{' '}
         快速记录即时的想法和计划。
       </p>
       <p className="text-fd-muted-foreground mt-4">
         或者您也可以使用{' '}
         <Link
-          href="/docs/projects/"
+          href="/docs/para-dashboard/projects/"
           className="text-fd-foreground font-semibold underline"
         >
-          /docs/projects/
+          /docs/para-dashboard/projects/
         </Link>{' '}
         记录您的项目和任务。
       </p>
