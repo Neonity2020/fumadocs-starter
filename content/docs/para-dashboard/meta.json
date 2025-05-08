@@ -1,0 +1,8 @@
+{
+    "title": "PARA Dashboard",
+    "description": "PARA Dashboard",
+    "icon": "LayoutDashboard",
+    "pages": ["projects", "areas", "resources"],
+    "defaultOpen": true
+}
+

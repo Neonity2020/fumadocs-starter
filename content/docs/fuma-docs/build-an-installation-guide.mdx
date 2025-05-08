@@ -1,0 +1,59 @@
+---
+title: 构建一个安装指南
+description: 使用FumaDocs构建一个安装指南
+previews: build-an-installation-guide
+icon: Rocket
+---
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+
+## 使用FumaDocs构建一个安装指南
+
+使用nodejs安装TiddlyWiki的示例：
+
+### 在不同的系统下安装TiddlyWiki Nodejs版
+
+<Tabs items={["Windows","MacOS","Linux"]}>
+    <Tab>
+        
+        ### Windows系统下安装TiddlyWiki Nodejs版
+        ```bash
+         npm install -g tiddlywiki
+        ```
+        
+        ```bash
+         tiddlywiki --init server
+        ```
+
+        ```bash
+         tiddlywiki mynewwiki --listen
+        ```
+    </Tab>
+    <Tab>
+        ### MacOS系统下安装TiddlyWiki Nodejs版
+        ```bash
+         tiddlywiki --init server
+        ```
+    </Tab>
+    <Tab>
+        ### Linux系统下安装TiddlyWiki Nodejs版
+
+        Debian/Ubuntu:
+        
+            `apt install nodejs`
+
+        May need to be followed up by:
+
+            `apt install npm`
+
+        Arch Linux:
+
+            `yay -S tiddlywiki`
+
+            (installs node and tiddlywiki)
+
+        ```bash
+         tiddlywiki --init server
+        ```
+    </Tab>
+</Tabs>
+

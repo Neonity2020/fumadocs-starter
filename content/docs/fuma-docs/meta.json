@@ -1,5 +1,5 @@
 {
     "title": "Fumadocs 使用指南",
-    "pages": ["add-icons-to-sidebar-items", "make-a-blog"],
+    "pages": ["add-icons-to-sidebar-items", "make-a-blog", "build-an-installation-guide"],
     "icon": "Eclipse"
 }
